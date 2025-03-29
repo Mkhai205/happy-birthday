@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Happy birthday</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div class="night"></div>
+        <div class="hearts"></div>
+        <div class="sparkles"></div>
+
+        <div class="container">
+            <div class="cake-container">
+                <div class="cake">
+                    <div class="plate"></div>
+                    <div class="cake-bottom"></div>
+                    <div class="cake-middle"></div>
+                    <div class="cake-top"></div>
+                    <div class="candle-container">
+                        <div class="candle"></div>
+                        <div class="flame-container">
+                            <div class="flame" id="flame"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="birthday-text animate__animated animate__bounce">Happy Birthday To You!</h1>
+            <p class="message">Hôm nay là ngày đặc biệt của bạn. Hãy enjoy cái moment này!</p>
+
+            <h2 class="name">Chúc Mừng Sinh Nhật Hồng Khánh</h2>
+            <button id="blowButton" class="animate__animated animate__pulse animate__infinite">
+                Thổi Nến Sinh Nhật!
+            </button>
+        </div>
+
+        <div class="modal-overlay" id="wishModal">
+            <div class="modal-content">
+                <button class="modal-close" id="closeModal">×</button>
+                <h2 class="wish-title animate__animated animate__fadeInDown">Lời Chúc Sinh Nhật</h2>
+
+                <p class="wish-message animate__animated animate__fadeIn">
+                    Chúc mừng sinh nhật! Mong rằng tuổi mới này sẽ mang đến cho bạn niềm vui, sức
+                    khỏe và thành công. Mỗi ngày trôi qua đều là một món quà tuyệt vời, hãy trân
+                    trọng và tận hưởng từng khoảnh khắc. Chúc bạn luôn xinh đẹp, tươi cười, hạnh phúc và gặp
+                    nhiều may mắn trong cuộc sống!
+                </p>
+                <p class="signature animate__animated animate__fadeIn animate__delay-1s">
+                    From Mạnh Khải ♥
+                </p>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const night = document.querySelector(".night");
+                for (let i = 0; i < 200; i++) {
+                    const star = document.createElement("div");
+                    star.classList.add("star");
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.setProperty("--duration", `${2 + Math.random() * 8}s`);
+                    star.style.animationDelay = `${Math.random() * 5}s`;
+                    night.appendChild(star);
+                }
+
+                const cake = document.querySelector(".cake");
+                const colors = [
+                    "#FF5252",
+                    "#FF4081",
+                    "#7C4DFF",
+                    "#536DFE",
+                    "#4CAF50",
+                    "#FFEB3B",
+                    "#FF9800",
+                ];
+
+                for (let i = 0; i < 15; i++) {
+                    const frosting = document.createElement("div");
+                    frosting.classList.add("frosting");
+                    frosting.style.width = `${8 + Math.random() * 7}px`;
+                    frosting.style.height = `${8 + Math.random() * 7}px`;
+                    frosting.style.bottom = `${Math.random() * 80}px`;
+                    frosting.style.left = `${Math.random() * 250}px`;
+                    cake.appendChild(frosting);
+                }
+
+                for (let i = 0; i < 20; i++) {
+                    const decoration = document.createElement("div");
+                    decoration.classList.add("decoration");
+                    decoration.style.backgroundColor =
+                        colors[Math.floor(Math.random() * colors.length)];
+                    decoration.style.bottom = `${20 + Math.random() * 150}px`;
+                    decoration.style.left = `${20 + Math.random() * 210}px`;
+                    decoration.style.animationDelay = `${1.5 + Math.random() * 0.5}s`;
+                    cake.appendChild(decoration);
+                }
+
+                const blowButton = document.getElementById("blowButton");
+                const flame = document.getElementById("flame");
+                const modal = document.getElementById("wishModal");
+                const closeModal = document.getElementById("closeModal");
+
+                blowButton.addEventListener("click", () => {
+                    flame.style.opacity = "0";
+                    flame.style.transition = "opacity 0.5s ease-out";
+
+                    createConfetti();
+
+                    blowButton.textContent = "Làm thêm một điều ước! 🎁";
+                    blowButton.classList.remove("animate__pulse");
+                    blowButton.classList.add("animate__tada");
+
+                    setTimeout(() => {
+                        modal.classList.add("active");
+                    }, 800);
+
+                    playSound();
+                });
+
+                closeModal.addEventListener("click", function () {
+                    modal.classList.remove("active");
+                });
+
+                modal.addEventListener("click", function (e) {
+                    if (e.target === modal) {
+                        modal.classList.remove("active");
+                    }
+                });
+
+                const sparkles = document.querySelector(".sparkles");
+                const createConfetti = () => {
+                    for (let i = 0; i < 60; i++) {
+                        const confetti = document.createElement("div");
+                        confetti.classList.add("confetti");
+                        confetti.style.left = `${Math.random() * 100}%`;
+                        confetti.style.backgroundColor =
+                            colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.width = `${5 + Math.random() * 10}px`;
+                        confetti.style.height = `${5 + Math.random() * 10}px`;
+                        confetti.style.animationDelay = `${Math.random() * 5}s`;
+                        sparkles.appendChild(confetti);
+                    }
+                };
+
+                const hearts = document.querySelector(".hearts");
+                for (let i = 0; i < 50; i++) {
+                    const heart = document.createElement("div");
+                    heart.classList.add("heart");
+                    heart.style.left = `${Math.random() * 100}%`;
+                    heart.style.opacity = Math.random();
+                    heart.style.animationDelay = `${Math.random() * 10}s`;
+                    hearts.appendChild(heart);
+                }
+
+                const playSound = () => {
+                    const audio = new Audio("./assets/happy-birthday-to-you.mp3");
+                    audio.play();
+                    audio.loop = true;
+                };
+            });
+        </script>
+    </body>
+</html>
