@@ -107,6 +107,7 @@
                 const modal = document.getElementById("wishModal");
                 const closeModal = document.getElementById("closeModal");
 
+                let isPlaySound = false;
                 blowButton.addEventListener("click", () => {
                     flame.style.opacity = "0";
                     flame.style.transition = "opacity 0.5s ease-out";
@@ -120,8 +121,10 @@
                     setTimeout(() => {
                         modal.classList.add("active");
                     }, 800);
-
-                    playSound();
+                    if(!isPlaySound) {
+                        playSound();
+                    }
+                    isPlaySound = true;
                 });
 
                 closeModal.addEventListener("click", function () {
@@ -162,7 +165,7 @@
                 const playSound = () => {
                     const audio = new Audio("./assets/happy-birthday-to-you.mp3");
                     audio.play();
-                    // audio.loop = true;
+                    audio.loop = true;
                 };
             });
         </script>
